@@ -1,0 +1,315 @@
+[
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/building-trust-in-ai-systems",
+    "score": 91,
+    "issues": [
+      {
+        "type": "warning",
+        "message": "Title too short (28 chars). Aim for 50-60 characters."
+      },
+      {
+        "type": "warning",
+        "message": "1 image(s) missing alt text"
+      },
+      {
+        "type": "info",
+        "message": "No canonical URL specified"
+      }
+    ],
+    "passed": [
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Building Trust in AI Systems",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": null,
+      "ogImage": "https://framerusercontent.com/images/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/",
+    "score": 92,
+    "issues": [
+      {
+        "type": "warning",
+        "message": "Title too short (22 chars). Aim for 50-60 characters."
+      },
+      {
+        "type": "warning",
+        "message": "Meta description too short (10 chars). Aim for 150-160 characters."
+      }
+    ],
+    "passed": [
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "San Diego AI Solutions",
+      "description": "Loading...",
+      "canonical": "https://sandiegoaisolutions.framer.website/",
+      "ogImage": "https://framerusercontent.com/assets/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/legal-pages/privacy-policy",
+    "score": 95,
+    "issues": [
+      {
+        "type": "warning",
+        "message": "Title too short (14 chars). Aim for 50-60 characters."
+      }
+    ],
+    "passed": [
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Privacy Policy",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/legal-pages/privacy-policy",
+      "ogImage": "https://framerusercontent.com/assets/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/predictive-analytics-seeing-tomorrow-today",
+    "score": 96,
+    "issues": [
+      {
+        "type": "warning",
+        "message": "1 image(s) missing alt text"
+      },
+      {
+        "type": "info",
+        "message": "No canonical URL specified"
+      }
+    ],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Predictive Analytics: Seeing Tomorrow, Today",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": null,
+      "ogImage": "https://framerusercontent.com/images/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/ai-powered-marketing-smarter-campaigns-better-results",
+    "score": 98,
+    "issues": [
+      {
+        "type": "info",
+        "message": "No canonical URL specified"
+      }
+    ],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "AI-Powered Marketing: Smarter Campaigns, Better Results",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": null,
+      "ogImage": "https://framerusercontent.com/images/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/from-data-to-decisions-turning-insights-into-action",
+    "score": 98,
+    "issues": [
+      {
+        "type": "info",
+        "message": "No canonical URL specified"
+      }
+    ],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "From Data to Decisions: Turning Insights into Action",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": null,
+      "ogImage": "https://framerusercontent.com/images/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/the-rise-of-data-driven-decision-making",
+    "score": 98,
+    "issues": [
+      {
+        "type": "info",
+        "message": "No canonical URL specified"
+      }
+    ],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "The Rise of Data-Driven Decision Making",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": null,
+      "ogImage": "https://framerusercontent.com/images/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/404",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Altrion – Modern AI Agency Template",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/404",
+      "ogImage": "https://framerusercontent.com/assets/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Altrion – Modern AI Agency Template",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/blog",
+      "ogImage": "https://framerusercontent.com/assets/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/ai-in-customer-experience-the-human-touch-enhanced",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "AI in Customer Experience: The Human Touch, Enhanced",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/blog/ai-in-customer-experience-the-human-touch-enhanced",
+      "ogImage": "https://framerusercontent.com/images/XBAwa9tW52Ui0IVXXxt19f4ilTU.jpg?width=1920&height=850"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/automating-workflows-the-smart-way-forward",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "Automating Workflows: The Smart Way Forward",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/blog/automating-workflows-the-smart-way-forward",
+      "ogImage": "https://framerusercontent.com/images/wHt1GfYdyPsQdCIOcr4XB7u8Mxo.jpg?width=1920&height=850"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/blog/how-ai-is-redefining-business-strategy",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "How AI Is Redefining Business Strategy",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/blog/how-ai-is-redefining-business-strategy",
+      "ogImage": "https://framerusercontent.com/images/wALnKiXbytdlSYNSQ1pqfIevY.jpg?width=1920&height=850"
+    }
+  },
+  {
+    "url": "https://sandiegoaisolutions.framer.website/contact",
+    "score": 100,
+    "issues": [],
+    "passed": [
+      "Title tag is properly configured",
+      "Meta description is properly configured",
+      "Single H1 heading present",
+      "All images have alt attributes",
+      "Canonical URL is set",
+      "Open Graph meta tags present",
+      "Viewport meta tag present",
+      "Language attribute set"
+    ],
+    "meta": {
+      "title": "San Diego AI Solutions Contact",
+      "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+      "canonical": "https://sandiegoaisolutions.framer.website/contact",
+      "ogImage": "https://framerusercontent.com/assets/BRfLIqskopzpqwOZyGN36xfcVA.jpg"
+    }
+  }
+]

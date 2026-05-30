@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/",
+    "title": "San Diego AI Solutions",
+    "description": "Loading...",
+    "excerpt": "©Since 2026"
+  },
+  {
+    "path": "/404",
+    "title": "Altrion – Modern AI Agency Template",
+    "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+    "excerpt": "Something went wrong"
+  },
+  {
+    "path": "/blog",
+    "title": "Altrion – Modern AI Agency Template",
+    "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+    "excerpt": "Featured post"
+  },
+  {
+    "path": "/contact",
+    "title": "San Diego AI Solutions Contact",
+    "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+    "excerpt": "Office Location"
+  },
+  {
+    "path": "/legal-pages",
+    "title": "Privacy Policy",
+    "description": "Altrion provides everything an AI agency needs: streamlined layouts, case studies, pricing plan sections, and strong CTAs designed to attract enterprise clients.",
+    "excerpt": "Last updated:"
+  }
+]
