@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Intake — SD AI Solutions</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --surface:  #181818;
+      --border:   #2a2a2a;
+      --border2:  #3a3a3a;
+      --text:     #f1f1f1;
+      --muted:    #a3a3a3;
+      --accent:   #09f;
+      --accent2:  #0080cc;
+      --success:  #22c55e;
+      --radius:   12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .header-badge {
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      border: 1px solid var(--border2); border-radius: 20px;
+      padding: 3px 10px; letter-spacing: 0.3px;
+    }
+
+    /* ── Progress ── */
+    .progress-wrap { padding: 20px 24px 0; max-width: 680px; margin: 0 auto; }
+    .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .progress-label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.4px; text-transform: uppercase; }
+    .progress-count { font-size: 12px; color: var(--muted); }
+    .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+
+    /* ── Main ── */
+    .main { max-width: 680px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    /* ── Steps ── */
+    .step { display: none; animation: fadeUp 0.3s ease; }
+    .step.active { display: block; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .step-header { margin-bottom: 32px; }
+    .step-eyebrow { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .step-title { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 10px; }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 22px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+    label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 7px; }
+    label .req { color: var(--accent); margin-left: 2px; }
+    label .hint { font-weight: 400; color: var(--muted); font-size: 12px; }
+
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      padding: 11px 14px;
+      transition: border-color 0.2s;
+      outline: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,153,255,0.1); }
+    input::placeholder, textarea::placeholder { color: #555; }
+    textarea { resize: vertical; min-height: 90px; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+    select option { background: #1a1a1a; }
+
+    /* Radio groups */
+    .radio-group, .check-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-group.inline, .check-group.inline { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+
+    .radio-option, .check-option {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 14px; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 14px;
+      user-select: none;
+    }
+    .radio-option:hover, .check-option:hover { border-color: var(--border2); }
+    .radio-option input, .check-option input { display: none; }
+    .radio-option .dot {
+      width: 16px; height: 16px; min-width: 16px;
+      border: 2px solid var(--border2); border-radius: 50%;
+      background: transparent; transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .radio-option.selected { border-color: var(--accent); background: rgba(0,153,255,0.07); }
+    .radio-option.selected .dot { border-color: var(--accent); background: var(--accent); }
+    .radio-option.selected .dot::after { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; display: block; }
+
+    .check-option .box {
+      width: 16px; height: 16px; min-width: 16px;
+      border: 2px solid var(--border2); border-radius: 4px;
+      background: transparent; transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-option.selected { border-color: var(--accent); background: rgba(0,153,255,0.07); }
+    .check-option.selected .box { border-color: var(--accent); background: var(--accent); }
+    .check-option.selected .box::after { content: '✓'; color: #fff; font-size: 10px; font-weight: 700; }
+
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 500px) { .check-grid { grid-template-columns: 1fr; } }
+
+    /* Other input */
+    .other-input { margin-top: 6px; display: none; }
+    .other-input.show { display: block; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    /* ── Navigation ── */
+    .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 36px; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      border-radius: 8px; padding: 11px 22px; cursor: pointer;
+      border: none; outline: none; transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+    .arrow { font-size: 16px; }
+
+    /* ── Success ── */
+    .success-screen {
+      display: none; text-align: center;
+      padding: 60px 24px; max-width: 520px; margin: 0 auto;
+    }
+    .success-screen.show { display: block; animation: fadeUp 0.4s ease; }
+    .success-icon {
+      width: 72px; height: 72px; background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 24px;
+    }
+    .success-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 14px; }
+    .success-sub { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .success-detail { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; text-align: left; }
+    .success-detail p { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .success-detail p:last-child { margin-bottom: 0; }
+    .success-detail strong { color: var(--text); }
+
+    /* ── Error ── */
+    .field-error { font-size: 12px; color: #f87171; margin-top: 5px; display: none; }
+    .field-error.show { display: block; }
+    .form-error { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #f87171; margin-bottom: 20px; display: none; }
+    .form-error.show { display: block; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <a class="logo" href="https://sandiegoaisolutions.com">SD <span>AI</span> Solutions</a>
+  <span class="header-badge">Confidential · Client Intake</span>
+</header>
+
+<!-- Progress -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span class="progress-label" id="progressLabel">Your Business</span>
+    <span class="progress-count" id="progressCount">Step 1 of 7</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:14%"></div></div>
+</div>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- ════════════════ STEP 1 — YOUR BUSINESS ════════════════ -->
+  <div class="step active" id="step-1">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 1 of 7</div>
+      <h1 class="step-title">Tell us about your business</h1>
+      <p class="step-desc">Basic information so we can personalize your AI setup.</p>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Business Name <span class="req">*</span></label>
+        <input type="text" id="company_name" placeholder="All Pro HVAC">
+      </div>
+      <div class="field">
+        <label>Business Type / Niche <span class="req">*</span> <span class="hint">(e.g. HVAC, Dental, Salon)</span></label>
+        <input type="text" id="industry" placeholder="HVAC Contractor">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Your Full Name <span class="req">*</span></label>
+        <input type="text" id="full_name" placeholder="Mike Torres">
+      </div>
+      <div class="field">
+        <label>Your Role</label>
+        <input type="text" id="role" placeholder="Owner / Manager">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="mike@allprohvac.com">
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="(619) 555-0123">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>City</label>
+        <input type="text" id="city" placeholder="San Diego, CA">
+      </div>
+      <div class="field">
+        <label>Business Website</label>
+        <input type="text" id="website" placeholder="allprohvac.com">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Number of Locations</label>
+      <div class="radio-group inline" data-name="locations">
+        <label class="radio-option"><input type="radio" value="1"><span class="dot"></span>1</label>
+        <label class="radio-option"><input type="radio" value="2-3"><span class="dot"></span>2–3</label>
+        <label class="radio-option"><input type="radio" value="4+"><span class="dot"></span>4 or more</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>How long have you been in business?</label>
+      <div class="radio-group inline" data-name="biz_age">
+        <label class="radio-option"><input type="radio" value="Under 1 year"><span class="dot"></span>Under 1 year</label>
+        <label class="radio-option"><input type="radio" value="1–3 years"><span class="dot"></span>1–3 years</label>
+        <label class="radio-option"><input type="radio" value="3–10 years"><span class="dot"></span>3–10 years</label>
+        <label class="radio-option"><input type="radio" value="10+ years"><span class="dot"></span>10+ years</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Approximately how many new customers or leads do you handle per month?</label>
+      <div class="radio-group inline" data-name="monthly_volume">
+        <label class="radio-option"><input type="radio" value="1–50"><span class="dot"></span>1–50</label>
+        <label class="radio-option"><input type="radio" value="51–200"><span class="dot"></span>51–200</label>
+        <label class="radio-option"><input type="radio" value="201–500"><span class="dot"></span>201–500</label>
+        <label class="radio-option"><input type="radio" value="500+"><span class="dot"></span>500+</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What is your average job or transaction value?</label>
+      <div class="radio-group inline" data-name="avg_value">
+        <label class="radio-option"><input type="radio" value="Under $100"><span class="dot"></span>Under $100</label>
+        <label class="radio-option"><input type="radio" value="$100–$500"><span class="dot"></span>$100–$500</label>
+        <label class="radio-option"><input type="radio" value="$500–$2,000"><span class="dot"></span>$500–$2,000</label>
+        <label class="radio-option"><input type="radio" value="$2,000+"><span class="dot"></span>$2,000+</label>
+      </div>
+    </div>
+
+    <div class="nav">
+      <span></span>
+      <button class="btn btn-primary" onclick="goNext(1)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 2 — CHALLENGES ════════════════ -->
+  <div class="step" id="step-2">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 2 of 7</div>
+      <h1 class="step-title">What's slowing you down?</h1>
+      <p class="step-desc">Check everything that applies — the more you share, the better we can help.</p>
+    </div>
+
+    <div class="field">
+      <label>Biggest challenges right now <span class="hint">(check all that apply)</span></label>
+      <div class="check-grid" data-name="challenges">
+        <label class="check-option"><input type="checkbox" value="Missing calls/texts after hours"><span class="box"></span>Missing calls/texts after hours</label>
+        <label class="check-option"><input type="checkbox" value="High no-show / cancellation rate"><span class="box"></span>High no-show / cancellation rate</label>
+        <label class="check-option"><input type="checkbox" value="Too much time on scheduling"><span class="box"></span>Too much time on scheduling</label>
+        <label class="check-option"><input type="checkbox" value="Chasing late payments & invoicing"><span class="box"></span>Chasing late payments & invoicing</label>
+        <label class="check-option"><input type="checkbox" value="Replying to reviews and messages"><span class="box"></span>Replying to reviews and messages</label>
+        <label class="check-option"><input type="checkbox" value="Lead follow-up falling through"><span class="box"></span>Lead follow-up falling through</label>
+        <label class="check-option"><input type="checkbox" value="Manual data entry & reporting"><span class="box"></span>Manual data entry & reporting</label>
+        <label class="check-option"><input type="checkbox" value="Staff scheduling problems"><span class="box"></span>Staff scheduling problems</label>
+        <label class="check-option"><input type="checkbox" value="Inventory / supply issues"><span class="box"></span>Inventory / supply issues</label>
+        <label class="check-option"><input type="checkbox" value="Quotes going cold"><span class="box"></span>Quotes going cold / not converting</label>
+        <label class="check-option"><input type="checkbox" value="Past customers not returning"><span class="box"></span>Past customers not returning</label>
+        <label class="check-option other-trigger"><input type="checkbox" value="Other"><span class="box"></span>Other</label>
+      </div>
+      <div class="other-input" id="challenges_other_wrap">
+        <input type="text" id="challenges_other" placeholder="Describe your challenge...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>How are you currently handling follow-up with leads and customers?</label>
+      <div class="radio-group" data-name="followup_current">
+        <label class="radio-option"><input type="radio" value="Not at all — things slip through"><span class="dot"></span>Not at all — things slip through</label>
+        <label class="radio-option"><input type="radio" value="Manually when I remember"><span class="dot"></span>Manually when I remember</label>
+        <label class="radio-option"><input type="radio" value="Staff handles it but inconsistently"><span class="dot"></span>Staff handles it but inconsistently</label>
+        <label class="radio-option"><input type="radio" value="Using a tool but it's not working well"><span class="dot"></span>Using a tool but it's not working well</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>How quickly do you typically respond to new leads?</label>
+      <div class="radio-group inline" data-name="response_speed">
+        <label class="radio-option"><input type="radio" value="Within minutes"><span class="dot"></span>Within minutes</label>
+        <label class="radio-option"><input type="radio" value="Within a few hours"><span class="dot"></span>Within a few hours</label>
+        <label class="radio-option"><input type="radio" value="Same day"><span class="dot"></span>Same day</label>
+        <label class="radio-option"><input type="radio" value="I miss most of them"><span class="dot"></span>I miss most of them</label>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(2)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" onclick="goNext(2)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 3 — AUTOMATE ════════════════ -->
+  <div class="step" id="step-3">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 3 of 7</div>
+      <h1 class="step-title">What do you want to automate?</h1>
+      <p class="step-desc">Select everything you're interested in — we'll prioritize based on what will make the biggest impact.</p>
+    </div>
+
+    <div class="field">
+      <label>Processes you want to automate <span class="hint">(check all that interest you)</span></label>
+      <div class="check-grid" data-name="agent_types">
+        <label class="check-option"><input type="checkbox" value="24/7 Appointment booking"><span class="box"></span>24/7 Appointment booking</label>
+        <label class="check-option"><input type="checkbox" value="Instant lead response & qualification"><span class="box"></span>Instant lead response & qualification</label>
+        <label class="check-option"><input type="checkbox" value="No-show reminders + rescheduling"><span class="box"></span>No-show reminders + rescheduling</label>
+        <label class="check-option"><input type="checkbox" value="Customer support / FAQ handling"><span class="box"></span>Customer support / FAQ handling</label>
+        <label class="check-option"><input type="checkbox" value="Personalized follow-up sequences"><span class="box"></span>Personalized follow-up sequences</label>
+        <label class="check-option"><input type="checkbox" value="Invoice creation & payment chasing"><span class="box"></span>Invoice creation & payment chasing</label>
+        <label class="check-option"><input type="checkbox" value="Quote follow-up"><span class="box"></span>Quote follow-up</label>
+        <label class="check-option"><input type="checkbox" value="Win-back past customers"><span class="box"></span>Win back past customers</label>
+        <label class="check-option"><input type="checkbox" value="Google review auto-replies"><span class="box"></span>Google review auto-replies</label>
+        <label class="check-option"><input type="checkbox" value="Review request after job"><span class="box"></span>Review request after completed job</label>
+        <label class="check-option"><input type="checkbox" value="Social media content generation"><span class="box"></span>Social media content generation</label>
+        <label class="check-option"><input type="checkbox" value="Performance reports & dashboards"><span class="box"></span>Performance reports & dashboards</label>
+        <label class="check-option"><input type="checkbox" value="Staff scheduling"><span class="box"></span>Staff scheduling</label>
+        <label class="check-option"><input type="checkbox" value="Client intake & onboarding"><span class="box"></span>Client intake & onboarding</label>
+        <label class="check-option"><input type="checkbox" value="Inventory tracking & reordering"><span class="box"></span>Inventory tracking & reordering</label>
+        <label class="check-option other-trigger"><input type="checkbox" value="Other"><span class="box"></span>Other</label>
+      </div>
+      <div class="other-input" id="agents_other_wrap">
+        <input type="text" id="agents_other" placeholder="Describe what you want to automate...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>If you had to pick just one — what is your single highest priority right now?</label>
+      <select id="top_priority">
+        <option value="">Select your #1 priority...</option>
+        <option>Instant lead response (never miss a lead again)</option>
+        <option>Quote follow-up (close more quotes)</option>
+        <option>Appointment reminders (reduce no-shows)</option>
+        <option>Win back past customers</option>
+        <option>Get more Google reviews</option>
+        <option>Payment / invoice chasing</option>
+        <option>24/7 customer support / FAQ</option>
+        <option>Something else (explain in notes)</option>
+      </select>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(3)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" onclick="goNext(3)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 4 — COMMUNICATION ════════════════ -->
+  <div class="step" id="step-4">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 4 of 7</div>
+      <h1 class="step-title">How you communicate</h1>
+      <p class="step-desc">This tells us exactly how to set up your AI agents so messages go out the right way.</p>
+    </div>
+
+    <div class="field">
+      <label>How do you prefer to reach customers?</label>
+      <div class="radio-group" data-name="channel">
+        <label class="radio-option"><input type="radio" value="SMS / Text"><span class="dot"></span>SMS / Text — most people respond faster to texts</label>
+        <label class="radio-option"><input type="radio" value="Email"><span class="dot"></span>Email — my customers prefer email</label>
+        <label class="radio-option"><input type="radio" value="Both SMS and Email"><span class="dot"></span>Both — start with text, follow up by email</label>
+        <label class="radio-option"><input type="radio" value="Not sure yet"><span class="dot"></span>Not sure yet — let SD AI recommend</label>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Business hours <span class="hint">(when AI should be active)</span></label>
+        <select id="biz_hours">
+          <option value="">Select...</option>
+          <option>Mon–Fri 9am–5pm</option>
+          <option>Mon–Fri 8am–6pm</option>
+          <option>Mon–Sat 8am–6pm</option>
+          <option>7 days a week</option>
+          <option>24/7 (always on)</option>
+          <option>Varies by season</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your timezone</label>
+        <select id="timezone">
+          <option value="">Select...</option>
+          <option>Pacific Time (PT)</option>
+          <option>Mountain Time (MT)</option>
+          <option>Central Time (CT)</option>
+          <option>Eastern Time (ET)</option>
+          <option>Hawaii Time (HT)</option>
+          <option>Alaska Time (AKT)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Do you serve Spanish-speaking customers?</label>
+      <div class="radio-group inline" data-name="language">
+        <label class="radio-option"><input type="radio" value="English only"><span class="dot"></span>English only</label>
+        <label class="radio-option"><input type="radio" value="Bilingual (English + Spanish)"><span class="dot"></span>Bilingual (English + Spanish)</label>
+        <label class="radio-option"><input type="radio" value="Mostly Spanish"><span class="dot"></span>Mostly Spanish</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Are your customers okay knowing they're communicating with AI?</label>
+      <div class="radio-group" data-name="ai_transparency">
+        <label class="radio-option"><input type="radio" value="Yes — be fully transparent"><span class="dot"></span>Yes — be transparent, customers appreciate honesty</label>
+        <label class="radio-option"><input type="radio" value="Prefer it feels like a team member"><span class="dot"></span>Prefer it feels like a real team member (e.g. "Alex from [Business]")</label>
+        <label class="radio-option"><input type="radio" value="Not sure"><span class="dot"></span>Not sure — let's discuss</label>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(4)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" onclick="goNext(4)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 5 — TOOLS & DATA ════════════════ -->
+  <div class="step" id="step-5">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 5 of 7</div>
+      <h1 class="step-title">Your tools & data</h1>
+      <p class="step-desc">The more we can connect to your existing systems, the more powerful your AI becomes.</p>
+    </div>
+
+    <div class="field">
+      <label>Tools & systems you currently use <span class="hint">(check all that apply)</span></label>
+      <div class="check-grid" data-name="tools">
+        <label class="check-option"><input type="checkbox" value="Google Calendar"><span class="box"></span>Google Calendar</label>
+        <label class="check-option"><input type="checkbox" value="Outlook Calendar"><span class="box"></span>Outlook Calendar</label>
+        <label class="check-option"><input type="checkbox" value="Square"><span class="box"></span>Square</label>
+        <label class="check-option"><input type="checkbox" value="Stripe"><span class="box"></span>Stripe</label>
+        <label class="check-option"><input type="checkbox" value="QuickBooks"><span class="box"></span>QuickBooks</label>
+        <label class="check-option"><input type="checkbox" value="Shopify"><span class="box"></span>Shopify / Online Store</label>
+        <label class="check-option"><input type="checkbox" value="Gmail / Outlook Email"><span class="box"></span>Gmail / Outlook Email</label>
+        <label class="check-option"><input type="checkbox" value="POS System"><span class="box"></span>POS System</label>
+        <label class="check-option"><input type="checkbox" value="CRM (HubSpot, Salesforce, etc.)"><span class="box"></span>CRM (HubSpot, Salesforce, etc.)</label>
+        <label class="check-option"><input type="checkbox" value="ServiceTitan"><span class="box"></span>ServiceTitan</label>
+        <label class="check-option"><input type="checkbox" value="Jobber"><span class="box"></span>Jobber</label>
+        <label class="check-option"><input type="checkbox" value="HouseCall Pro"><span class="box"></span>HouseCall Pro</label>
+        <label class="check-option"><input type="checkbox" value="Mindbody"><span class="box"></span>Mindbody</label>
+        <label class="check-option"><input type="checkbox" value="Spreadsheets only"><span class="box"></span>Spreadsheets only</label>
+        <label class="check-option other-trigger"><input type="checkbox" value="Other"><span class="box"></span>Other</label>
+      </div>
+      <div class="other-input" id="tools_other_wrap">
+        <input type="text" id="tools_other" placeholder="List your other tools...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Would you be open to giving SD AI read-only access for integrations?</label>
+      <div class="radio-group inline" data-name="integration_access">
+        <label class="radio-option"><input type="radio" value="Yes"><span class="dot"></span>Yes</label>
+        <label class="radio-option"><input type="radio" value="Maybe after we talk"><span class="dot"></span>Maybe after we talk</label>
+        <label class="radio-option"><input type="radio" value="No"><span class="dot"></span>No</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What customer data do you already collect? <span class="hint">(check all)</span></label>
+      <div class="check-grid" data-name="customer_data">
+        <label class="check-option"><input type="checkbox" value="Names, phones, emails"><span class="box"></span>Names, phones, emails</label>
+        <label class="check-option"><input type="checkbox" value="Appointment / purchase history"><span class="box"></span>Appointment / purchase history</label>
+        <label class="check-option"><input type="checkbox" value="Customer notes & preferences"><span class="box"></span>Customer notes & preferences</label>
+        <label class="check-option"><input type="checkbox" value="Special requirements"><span class="box"></span>Special requirements (allergies, job details, etc.)</label>
+        <label class="check-option"><input type="checkbox" value="Payment history"><span class="box"></span>Payment history</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>How do most of your leads come in? <span class="hint">(check all)</span></label>
+      <div class="check-grid" data-name="lead_sources">
+        <label class="check-option"><input type="checkbox" value="Google Search / SEO"><span class="box"></span>Google Search / SEO</label>
+        <label class="check-option"><input type="checkbox" value="Referrals / word of mouth"><span class="box"></span>Referrals / word of mouth</label>
+        <label class="check-option"><input type="checkbox" value="Social media"><span class="box"></span>Social media</label>
+        <label class="check-option"><input type="checkbox" value="Google / Facebook Ads"><span class="box"></span>Google / Facebook Ads</label>
+        <label class="check-option"><input type="checkbox" value="Walk-ins / in person"><span class="box"></span>Walk-ins / in person</label>
+        <label class="check-option"><input type="checkbox" value="Yelp / directory listings"><span class="box"></span>Yelp / directory listings</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Which review platform matters most to your business?</label>
+      <div class="radio-group inline" data-name="review_platform">
+        <label class="radio-option"><input type="radio" value="Google"><span class="dot"></span>Google</label>
+        <label class="radio-option"><input type="radio" value="Yelp"><span class="dot"></span>Yelp</label>
+        <label class="radio-option"><input type="radio" value="Facebook"><span class="dot"></span>Facebook</label>
+        <label class="radio-option"><input type="radio" value="All equally"><span class="dot"></span>All equally</label>
+        <label class="radio-option"><input type="radio" value="I don't focus on reviews yet"><span class="dot"></span>Not focused yet</label>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(5)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" onclick="goNext(5)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 6 — BRAND VOICE ════════════════ -->
+  <div class="step" id="step-6">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 6 of 7</div>
+      <h1 class="step-title">Your brand voice</h1>
+      <p class="step-desc">This is how we make the AI sound like <em>you</em> — not like a robot.</p>
+    </div>
+
+    <div class="field">
+      <label>Do you have documents the AI should learn from? <span class="hint">(check all)</span></label>
+      <div class="check-grid" data-name="ai_docs">
+        <label class="check-option"><input type="checkbox" value="Menu / Service price list"><span class="box"></span>Menu / Service price list</label>
+        <label class="check-option"><input type="checkbox" value="FAQ document"><span class="box"></span>FAQ document</label>
+        <label class="check-option"><input type="checkbox" value="Standard Operating Procedures"><span class="box"></span>Standard Operating Procedures (SOPs)</label>
+        <label class="check-option"><input type="checkbox" value="Past email or text examples"><span class="box"></span>Past email or text examples</label>
+        <label class="check-option"><input type="checkbox" value="Voice / style examples"><span class="box"></span>Voice / style examples</label>
+        <label class="check-option"><input type="checkbox" value="None yet"><span class="box"></span>None yet</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Paste an example of how you currently text or email a customer <span class="hint">(even a rough one — this helps us match your tone)</span></label>
+      <textarea id="message_example" placeholder="e.g. 'Hey John! Just wanted to follow up on your HVAC quote from Tuesday. We have a slot open this Friday if you want to get it done. Let me know! — Mike'"></textarea>
+    </div>
+
+    <div class="field">
+      <label>How would you describe your communication style?</label>
+      <div class="radio-group" data-name="tone">
+        <label class="radio-option"><input type="radio" value="Very casual & friendly (like texting a friend)"><span class="dot"></span>Very casual & friendly — like texting a friend</label>
+        <label class="radio-option"><input type="radio" value="Warm but professional"><span class="dot"></span>Warm but professional — friendly, not too informal</label>
+        <label class="radio-option"><input type="radio" value="Strictly professional"><span class="dot"></span>Strictly professional — formal and to the point</label>
+        <label class="radio-option"><input type="radio" value="Fun & personality-forward"><span class="dot"></span>Fun & personality-forward — we have a strong brand voice</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What name should the AI sign messages as?</label>
+      <div class="radio-group" data-name="sign_as">
+        <label class="radio-option"><input type="radio" value="Owner/my name"><span class="dot"></span>My name (owner)</label>
+        <label class="radio-option"><input type="radio" value="Business name"><span class="dot"></span>The business name only</label>
+        <label class="radio-option"><input type="radio" value="Team member name (e.g. Alex from [Business])"><span class="dot"></span>A team member name — e.g. "Alex from [Business]"</label>
+        <label class="radio-option"><input type="radio" value="No sign-off needed"><span class="dot"></span>No sign-off needed</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Anything special we should know? <span class="hint">Busy seasons, rules ("never message after 7pm"), special requirements, languages, tone rules, etc.</span></label>
+      <textarea id="notes" placeholder="e.g. 'We get super busy in summer, never message on Sundays, always mention our 5-star rating, our customers are mostly Spanish-speaking homeowners in their 40s–60s'"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(6)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" onclick="goNext(6)">Next <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ STEP 7 — GOALS & BUDGET ════════════════ -->
+  <div class="step" id="step-7">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 7 of 7</div>
+      <h1 class="step-title">Goals & getting started</h1>
+      <p class="step-desc">Last section — we're almost done.</p>
+    </div>
+
+    <div class="field">
+      <label>What does success look like for your business in the first 3 months with AI?</label>
+      <textarea id="goals" placeholder="e.g. 'Close at least 20% more quotes, stop losing leads after hours, get 10 new Google reviews a month'"></textarea>
+    </div>
+
+    <div class="field">
+      <label>When do you want to go live?</label>
+      <div class="radio-group inline" data-name="timeline">
+        <label class="radio-option"><input type="radio" value="ASAP"><span class="dot"></span>ASAP</label>
+        <label class="radio-option"><input type="radio" value="Within 2 weeks"><span class="dot"></span>Within 2 weeks</label>
+        <label class="radio-option"><input type="radio" value="Within a month"><span class="dot"></span>Within a month</label>
+        <label class="radio-option"><input type="radio" value="Still exploring"><span class="dot"></span>Still exploring</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Who on your team will monitor AI conversations?</label>
+      <div class="radio-group" data-name="monitor_who">
+        <label class="radio-option"><input type="radio" value="Just me (owner)"><span class="dot"></span>Just me — I'll keep an eye on it</label>
+        <label class="radio-option"><input type="radio" value="Office manager / admin"><span class="dot"></span>Office manager or admin staff</label>
+        <label class="radio-option"><input type="radio" value="Dedicated team member"><span class="dot"></span>We have a dedicated team member for this</label>
+        <label class="radio-option"><input type="radio" value="Nobody — fully hands-off"><span class="dot"></span>Nobody — I want it fully hands-off</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Monthly budget range for AI automation</label>
+      <div class="radio-group" data-name="budget">
+        <label class="radio-option"><input type="radio" value="$300–$500/month"><span class="dot"></span>$300 – $500 / month</label>
+        <label class="radio-option"><input type="radio" value="$501–$800/month"><span class="dot"></span>$501 – $800 / month</label>
+        <label class="radio-option"><input type="radio" value="$801–$1,200/month"><span class="dot"></span>$801 – $1,200 / month</label>
+        <label class="radio-option"><input type="radio" value="$1,200+/month"><span class="dot"></span>$1,200+ / month</label>
+        <label class="radio-option"><input type="radio" value="Not sure yet"><span class="dot"></span>Not sure yet</label>
+      </div>
+    </div>
+
+    <div class="form-error" id="submitError"></div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goPrev(7)"><span class="arrow">←</span> Back</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Submit <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ SUCCESS ════════════════ -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">You're all set!</h2>
+    <p class="success-sub">We've received your intake form and our team is already reviewing it.<br>Ulises will reach out within <strong>24 hours</strong> to walk you through your custom AI setup.</p>
+    <div class="success-detail">
+      <p>📋 <strong>What happens next:</strong></p>
+      <p>1. We analyze your answers and design your agent setup</p>
+      <p>2. Ulises schedules a quick 20-min onboarding call</p>
+      <p>3. Your AI agents go live — usually within 3–5 business days</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const API = 'https://api.sandiegoaisolutions.com/api/v1/discovery/submit';
+  let currentStep = 1;
+  const totalSteps = 7;
+
+  const stepLabels = ['Your Business','Your Challenges','What to Automate','Communication','Tools & Data','Brand Voice','Goals & Budget'];
+
+  // ── Radio / Checkbox interactivity ──
+  document.querySelectorAll('.radio-group').forEach(group => {
+    group.querySelectorAll('.radio-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        opt.querySelector('input').checked = true;
+      });
+    });
+  });
+
+  document.querySelectorAll('.check-group, .check-grid').forEach(group => {
+    group.querySelectorAll('.check-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        opt.classList.toggle('selected');
+        opt.querySelector('input').checked = opt.classList.contains('selected');
+        // other trigger
+        if (opt.classList.contains('other-trigger')) {
+          const wrap = opt.closest('.field').querySelector('.other-input');
+          if (wrap) wrap.classList.toggle('show', opt.classList.contains('selected'));
+        }
+      });
+    });
+  });
+
+  // ── Navigation ──
+  function goNext(step) {
+    if (!validateStep(step)) return;
+    showStep(step + 1);
+  }
+  function goPrev(step) { showStep(step - 1); }
+
+  function showStep(n) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep = n;
+    const el = document.getElementById('step-' + n);
+    if (el) { el.classList.add('active'); window.scrollTo({top: 0, behavior: 'smooth'}); }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = Math.round((currentStep / totalSteps) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = stepLabels[currentStep - 1];
+    document.getElementById('progressCount').textContent = 'Step ' + currentStep + ' of ' + totalSteps;
+  }
+
+  // ── Validation ──
+  function validateStep(step) {
+    if (step === 1) {
+      const req = ['company_name','full_name','email','industry'];
+      for (const id of req) {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) { el.focus(); showFieldError(el, 'This field is required'); return false; }
+      }
+      const emailEl = document.getElementById('email');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+        emailEl.focus(); showFieldError(emailEl, 'Enter a valid email address'); return false;
+      }
+    }
+    return true;
+  }
+
+  function showFieldError(el, msg) {
+    let err = el.parentNode.querySelector('.field-error');
+    if (!err) { err = document.createElement('div'); err.className = 'field-error'; el.parentNode.appendChild(err); }
+    err.textContent = msg; err.classList.add('show');
+    el.style.borderColor = '#f87171';
+    el.addEventListener('input', () => { err.classList.remove('show'); el.style.borderColor = ''; }, {once: true});
+  }
+
+  // ── Collect data ──
+  function getRadio(name) {
+    const el = document.querySelector(`.radio-group[data-name="${name}"] .radio-option.selected input, .radio-group.inline[data-name="${name}"] .radio-option.selected input`);
+    return el ? el.value : '';
+  }
+  function getChecks(name) {
+    const vals = [];
+    document.querySelectorAll(`.check-grid[data-name="${name}"] .check-option.selected input, .check-group[data-name="${name}"] .check-option.selected input`).forEach(el => {
+      if (el.value !== 'Other') vals.push(el.value);
+    });
+    return vals;
+  }
+  function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  // ── Submit ──
+  async function submitForm() {
+    const btn = document.getElementById('submitBtn');
+    const errBox = document.getElementById('submitError');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+    errBox.classList.remove('show');
+
+    // Build extra notes block for fields not in the base schema
+    const extra = [
+      val('role') ? `Role: ${val('role')}` : '',
+      val('city') ? `City: ${val('city')}` : '',
+      getRadio('locations') ? `Locations: ${getRadio('locations')}` : '',
+      getRadio('biz_age') ? `Business age: ${getRadio('biz_age')}` : '',
+      getRadio('monthly_volume') ? `Monthly volume: ${getRadio('monthly_volume')}` : '',
+      getRadio('avg_value') ? `Avg job value: ${getRadio('avg_value')}` : '',
+      getRadio('followup_current') ? `Current follow-up: ${getRadio('followup_current')}` : '',
+      getRadio('response_speed') ? `Lead response speed: ${getRadio('response_speed')}` : '',
+      val('top_priority') ? `Top priority: ${val('top_priority')}` : '',
+      getRadio('channel') ? `Preferred channel: ${getRadio('channel')}` : '',
+      val('biz_hours') ? `Business hours: ${val('biz_hours')}` : '',
+      val('timezone') ? `Timezone: ${val('timezone')}` : '',
+      getRadio('language') ? `Language: ${getRadio('language')}` : '',
+      getRadio('ai_transparency') ? `AI transparency: ${getRadio('ai_transparency')}` : '',
+      getChecks('tools').length ? `Tools: ${getChecks('tools').join(', ')}` : '',
+      val('tools_other') ? `Other tools: ${val('tools_other')}` : '',
+      getRadio('integration_access') ? `Integration access: ${getRadio('integration_access')}` : '',
+      getChecks('customer_data').length ? `Customer data: ${getChecks('customer_data').join(', ')}` : '',
+      getChecks('lead_sources').length ? `Lead sources: ${getChecks('lead_sources').join(', ')}` : '',
+      getRadio('review_platform') ? `Review platform: ${getRadio('review_platform')}` : '',
+      getChecks('ai_docs').length ? `AI docs available: ${getChecks('ai_docs').join(', ')}` : '',
+      val('message_example') ? `Message example:\n${val('message_example')}` : '',
+      getRadio('tone') ? `Tone: ${getRadio('tone')}` : '',
+      getRadio('sign_as') ? `Sign as: ${getRadio('sign_as')}` : '',
+      getRadio('monitor_who') ? `Who monitors: ${getRadio('monitor_who')}` : '',
+      val('notes') ? `Special notes: ${val('notes')}` : '',
+    ].filter(Boolean).join('\n');
+
+    const challenges = getChecks('challenges');
+    const challengeOther = val('challenges_other');
+    if (challengeOther) challenges.push(challengeOther);
+
+    const agents = getChecks('agent_types');
+    const agentsOther = val('agents_other');
+    if (agentsOther) agents.push(agentsOther);
+
+    const payload = {
+      full_name: val('full_name'),
+      email: val('email'),
+      phone: val('phone') || null,
+      company_name: val('company_name') || null,
+      website: val('website') || null,
+      industry: val('industry') || null,
+      business_size: getRadio('locations') || null,
+      monthly_revenue: getRadio('budget') || null,
+      goals: val('goals') || null,
+      current_pain: challenges.length ? challenges.join(', ') : null,
+      agent_types: agents.length ? agents.join(', ') : null,
+      timeline: getRadio('timeline') || null,
+      budget: getRadio('budget') || null,
+      referral_source: 'onboarding form',
+      notes: extra || null,
+    };
+
+    try {
+      const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error('Server error');
+      // Hide form, show success
+      document.getElementById('progressWrap').style.display = 'none';
+      document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+      document.getElementById('successScreen').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      errBox.textContent = 'Something went wrong. Please try again or email contact@sandiegoaisolutions.com.';
+      errBox.classList.add('show');
+      btn.disabled = false; btn.innerHTML = 'Submit <span class="arrow">→</span>';
+    }
+  }
+</script>
+</body>
+</html>
